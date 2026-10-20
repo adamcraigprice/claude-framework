@@ -1,0 +1,36 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(sed -i '' 's|http://localhost:3115|http://localhost:3116|' shoot2.js)",
+      "Bash(rm -f /tmp/q-*.png)",
+      "Bash(node shoot2.js)",
+      "Bash(node -e ' *)",
+      "Bash(timeout 90 node -e ' *)",
+      "Bash(pkill -f \"remote-debugging-port=9222\")",
+      "Bash(rm -rf /tmp/cprof /tmp/ql)",
+      "Bash(sips --cropToHeightWidth 420 520 --cropOffset 560 850 /tmp/bg-cursor.png --out /tmp/bg-cursor-crop.png)",
+      "Bash(sips -Z 900 /tmp/bg-cursor-crop.png --out /tmp/bg-cursor-z.png)",
+      "Bash(python3 -)",
+      "Bash(node readability.js)",
+      "Bash(cd /Users/adampriceconscia/Code/Personal-Portfolio-Site *)",
+      "Bash(cp components/particle-background.tsx /tmp/pbg-prev.tsx && rm components/particle-background.tsx && echo \"removed \\(backup at /tmp/pbg-prev.tsx\\)\")"
+    ],
+    "additionalDirectories": [
+      "/private/tmp/cprof2",
+      "/tmp"
+    ]
+  },
+  "model": "fable",
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "if [ -f docs/progress.md ] || [ -f docs/roadmap.md ]; then echo '=== PROJECT MEMORY: latest progress (docs/progress.md) ==='; tail -n 40 docs/progress.md 2>/dev/null; echo; echo '=== ROADMAP (docs/roadmap.md) ==='; cat docs/roadmap.md 2>/dev/null; fi"
+          }
+        ]
+      }
+    ]
+  }
+}

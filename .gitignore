@@ -1,0 +1,11 @@
+# Allowlist: only the framework is tracked. Sessions, history, caches,
+# credentials and synced account skills stay out of git.
+*
+!.gitignore
+!README.md
+!settings.json
+!skills/
+!skills/**
+skills/synced/
+!agents/
+!agents/**
