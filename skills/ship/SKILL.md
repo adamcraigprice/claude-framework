@@ -12,6 +12,10 @@ disable-model-invocation: true
 4. Use the test-runner subagent to run the full test suite and a
    production build. Fix and re-run until both pass.
 5. Update README.md if setup or usage changed.
+5b. Check each project skill in .claude/skills/ against the current code: do
+   its steps and example file paths still match how things are done? List any
+   that are stale and offer to fix or delete each one. Change nothing until I
+   say which. Keep the "Project skills" section of architecture.md in sync.
 6. Add a progress.md entry summarising the release, commit, and tag it
    with the next version (vX.Y).
 7. Push, then deploy using the deploy command in CLAUDE.md. Ask me before

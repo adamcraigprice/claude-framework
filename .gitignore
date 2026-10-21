@@ -4,6 +4,7 @@
 !.gitignore
 !README.md
 !OVERVIEW.md
+!framework-settings.md
 !settings.json
 !skills/
 !skills/**

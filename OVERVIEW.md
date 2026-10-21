@@ -30,6 +30,35 @@ switched computers or changed models. Claude starts out knowing where you are.
 That also means you can `/clear` as often as you like. A fresh session with good
 notes does better work than a long one full of old back-and-forth.
 
+Each of those files starts from a template with fixed sections. That sounds like
+a small thing, but it matters over months. Claude updates "Data model" or
+"Milestone 2" in place instead of tacking notes onto the bottom, so the files
+stay readable. Sections like "Out of scope" always get filled in, and every
+project you open looks the same.
+
+## It picks up your project's habits
+
+The notes cover what you've built. Project skills cover how you build it.
+
+Every app has a few things you end up doing again and again: another API route,
+another screen, another migration. The first time, Claude works out the steps.
+By the third time it should just know them, and it should stop making the
+mistake you already corrected twice.
+
+So after each `/build`, Claude checks for exactly that. If it just repeated a
+procedure, or you've had to correct it on the same thing twice, it asks whether
+you want to save the steps as a skill for this project. If you say yes, it
+writes a short skill that points at your real code as the example. From then
+on, every route or screen follows the same pattern. If you say no, it won't ask
+again about that one.
+
+There are a few guardrails so this doesn't turn into a mess. It only asks after
+real repetition, never during planning. Facts and one-line rules go in the
+notes, not in skills. Nothing gets saved without your yes. `/ship` checks the
+skills against your code and flags any that have gone stale. If you'd rather
+not be asked at all, `/skill-suggestions off` turns it off for one project or
+for everything.
+
 ## How a project moves
 
 ```
@@ -54,7 +83,7 @@ version and deploys.
 
 ## Why it stays simple
 
-The whole thing is five commands, two subagents and one hook. It's all markdown,
+The whole thing is seven commands, two subagents, one hook and a few templates. It's all markdown,
 so you can open any file and change it. There's no database or extra tooling.
 
 Nothing runs behind your back. The main commands only fire when you type them.
@@ -118,6 +147,9 @@ quietly swapping it out.
 **New features fit.** Because `/add-feature` reads the architecture and past
 decisions first, new work follows the patterns you already have instead of
 inventing a second way of doing the same thing.
+
+**You only correct Claude once.** When you fix how it does something it keeps
+doing, that fix can go into a project skill, and every later attempt follows it.
 
 **Mistakes stay small.** Each `/build` is one task and one commit. If something
 goes wrong you roll back one step, not a whole afternoon.

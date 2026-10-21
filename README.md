@@ -9,7 +9,7 @@ If you want the reasoning behind it, read [OVERVIEW.md](OVERVIEW.md).
 
 ## What you get
 
-You get five slash commands:
+You get seven slash commands:
 
 - `/plan-idea <your brainstorm>` asks you a few questions, then writes a vision,
   an architecture and a roadmap for the app.
@@ -18,11 +18,48 @@ You get five slash commands:
 - `/add-feature <your idea>` reads what's already built, writes a spec for the new
   feature and adds its tasks to the roadmap.
 - `/ship` runs a review, the tests and a build, then tags the release and deploys.
-- `/project-init` sets up the notes folder. You rarely need to type this one;
-  `/plan-idea` runs it for you.
+- `/project-init` sets up the notes folder from the templates. You rarely need
+  to type this one; `/plan-idea` runs it for you.
+- `/make-skill <a procedure>` saves something you keep doing in this project,
+  like "how we add API routes", as a skill Claude follows from then on.
+- `/skill-suggestions on|off|default|status [global]` controls whether Claude
+  suggests those skills on its own (more on that below).
 
 Plus two subagents (`code-reviewer` and `test-runner`) and a hook in
 `settings.json` that shows Claude your latest progress every time a session starts.
+
+The notes Claude keeps in each project (`vision.md`, `architecture.md`,
+`roadmap.md` and so on) come from fixed templates in
+`skills/project-init/templates/`, so every project's docs have the same sections
+and you always know where to look. Claude writes and updates them. You can edit
+them whenever you like. If you want different sections, change the templates.
+
+## Project skills
+
+As a project grows you'll do some things over and over: add another API route,
+another screen, another migration. After each `/build`, Claude checks whether it
+just repeated something it has done before, or whether you've corrected it on
+the same thing twice. If so, it asks:
+
+> I've now added 3 API routes the same way. Want me to save that as an
+> `add-api-route` skill so the next ones follow the same pattern?
+
+Say yes and it writes the skill into your project's `.claude/skills/` folder
+(Claude Code will ask you to approve writing there), lists it in
+`architecture.md` and commits it. Say no and it notes that, so it won't ask
+again. Facts about your app still go in `architecture.md`, and one-line rules go
+in `CLAUDE.md`. Only multi-step procedures become skills. `/ship` checks your
+project skills against the code and offers to fix or delete stale ones.
+
+If the suggestions get in the way, turn them off:
+
+- `/skill-suggestions off` turns them off for this project.
+- `/skill-suggestions off global` turns them off everywhere by default.
+- `/skill-suggestions default` makes this project follow the global setting again.
+- `/skill-suggestions status` shows what's in effect.
+
+A project setting always beats the global one. The global default lives in
+`~/.claude/framework-settings.md`. `/make-skill` keeps working either way.
 
 ## Using it
 
@@ -73,8 +110,8 @@ These steps are for a Mac. Swap in your own GitHub username wherever you see `US
    (history, caches) Claude Code rebuilds on its own.
 6. Restart VS Code, open a project, start Claude Code and run `/model fable`
    (or `/model opus`) once.
-7. Type `/`. If you see `plan-idea`, `build`, `add-feature`, `ship` and
-   `project-init`, you're set.
+7. Type `/`. If you see `plan-idea`, `build`, `add-feature`, `ship`,
+   `project-init`, `make-skill` and `skill-suggestions`, you're set.
 
 ## Keeping more than one computer in sync
 

@@ -18,7 +18,9 @@ $ARGUMENTS
 3. Propose a stack suited to a solo personal project: simple to host, few
    moving parts, good free tiers. Explain the choice in 2-3 lines and name
    one alternative you considered.
-4. After I confirm, fill in the docs:
+4. After I confirm, fill in the docs. Each doc already has its sections and
+   entry formats from the template; fill those sections in place and follow
+   the formats exactly:
    - vision.md: problem, users, core features, explicit out-of-scope list
    - architecture.md: stack, folder layout, data model, key patterns
    - roadmap.md: milestones (Milestone 1 = smallest usable MVP), each split
