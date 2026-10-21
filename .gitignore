@@ -3,6 +3,7 @@
 *
 !.gitignore
 !README.md
+!OVERVIEW.md
 !settings.json
 !skills/
 !skills/**
