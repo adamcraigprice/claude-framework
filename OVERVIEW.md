@@ -73,6 +73,69 @@ A second set of eyes reviews everything before you ship. Past decisions are
 written down, so Claude tells you when something conflicts with one instead of
 quietly undoing it. And every task starts with a clean context.
 
+## Isn't this just plan mode?
+
+Not quite, and you'll still use plan mode with it.
+
+Plan mode plans one task inside one session. Claude reads the code without
+touching anything, writes up a plan, and you approve it. That's great for the
+task in front of you. But the plan only lives in that conversation. Once you
+`/clear` or close the window, it's gone. Next week Claude won't know it existed,
+what you decided along the way, or what's still left to do.
+
+This framework plans the whole project and keeps that plan in your repo. The
+roadmap says what's done and what's next. The decisions log says why things are
+the way they are. The progress log says what happened last time. Every session
+starts with that loaded in, so you never have to re-explain your app.
+
+Think of it as two levels. The framework is the project plan. Plan mode, or the
+plan step inside `/build`, is the task plan. `/build` reads the project plan,
+writes a task plan, asks you to approve it when the task is big enough, then
+codes it and updates the project plan when it's done.
+
+| | Plan mode | This framework |
+|---|---|---|
+| Scope | One task | The whole project, from idea to shipped |
+| Lasts | Until the session ends | Forever, in your repo |
+| Remembers decisions | No | Yes, in `decisions.md` |
+| Knows what's done and what's next | No | Yes, in `roadmap.md` and `progress.md` |
+| Works across computers and models | No | Yes, it's just files |
+| Handles new ideas months later | You re-explain everything | `/add-feature` reads what exists first |
+| Testing, review, deploy | Up to you | Built into `/build` and `/ship` |
+
+## What you actually get out of it
+
+**You stop re-explaining your app.** Open a session a month from now and Claude
+already knows the stack, the data model and what you were halfway through.
+
+**Your ideas don't get lost.** A half-baked thought becomes a spec and a few
+roadmap tasks in a couple of minutes, even if you won't build it for weeks.
+
+**Claude stops undoing your choices.** Picked SQLite over Postgres for a reason?
+It's written down, and Claude will flag it before going against it instead of
+quietly swapping it out.
+
+**New features fit.** Because `/add-feature` reads the architecture and past
+decisions first, new work follows the patterns you already have instead of
+inventing a second way of doing the same thing.
+
+**Mistakes stay small.** Each `/build` is one task and one commit. If something
+goes wrong you roll back one step, not a whole afternoon.
+
+**You get better work for fewer tokens.** Clearing between tasks keeps the
+context short and focused. Claude reads a few short notes instead of dragging
+around hours of old conversation, which costs less and gets better results.
+
+**You can pick up anywhere.** Different computer, different model, a few months
+off: the notes are in the repo, so you just open it and run `/build`.
+
+**You end up with a paper trail.** The vision, architecture and decision log
+read like a design doc. That's handy when you're showing the project to someone,
+writing it up for a portfolio, or bringing a friend in to help.
+
+**It isn't tied to Claude.** The notes are plain markdown, so other AI tools, or
+just you on your own, can pick up the project from the same files.
+
 ## When you might outgrow it
 
 This is built for one person working on personal projects. If yours gets big,
