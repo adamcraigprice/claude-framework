@@ -72,7 +72,9 @@ how the thing gets built. Everything else gets a sensible default you can accept
 in one word.
 
 `/build` does one task at a time: plan it, write it, test it, log it, commit it.
-Small tasks mean small mistakes, and they're easy to undo.
+Small tasks mean small mistakes, and they're easy to undo. With auto-continue on,
+it chains those tasks through a milestone, each in a fresh subagent, and stops
+only when a decision really needs you.
 
 `/add-feature` reads what's already there before it plans anything, so new
 features fit into the app instead of fighting it.
@@ -154,8 +156,8 @@ doing, that fix can go into a project skill, and every later attempt follows it.
 **Mistakes stay small.** Each `/build` is one task and one commit. If something
 goes wrong you roll back one step, not a whole afternoon.
 
-**You get better work for fewer tokens.** Clearing between tasks keeps the
-context short and focused. Claude reads a few short notes instead of dragging
+**You get better work for fewer tokens.** Clearing between tasks (or a fresh
+subagent per task, with auto-continue) keeps the context short and focused. Claude reads a few short notes instead of dragging
 around hours of old conversation, which costs less and gets better results.
 
 **You can pick up anywhere.** Different computer, different model, a few months

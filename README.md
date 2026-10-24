@@ -9,12 +9,13 @@ If you want the reasoning behind it, read [OVERVIEW.md](OVERVIEW.md).
 
 ## What you get
 
-You get seven slash commands:
+You get eight slash commands:
 
 - `/plan-idea <your brainstorm>` asks you a few questions, then writes a vision,
   an architecture and a roadmap for the app.
 - `/build` picks up the next task on the roadmap, writes it with tests, updates the
-  notes and commits. Add a task name if you want a specific one.
+  notes and commits. Add a task name if you want a specific one. With auto-continue
+  on, it then keeps going through the milestone on its own (more on that below).
 - `/add-feature <your idea>` reads what's already built, writes a spec for the new
   feature and adds its tasks to the roadmap.
 - `/ship` runs a review, the tests and a build, then tags the release and deploys.
@@ -24,6 +25,8 @@ You get seven slash commands:
   like "how we add API routes", as a skill Claude follows from then on.
 - `/skill-suggestions on|off|default|status [global]` controls whether Claude
   suggests those skills on its own (more on that below).
+- `/auto-continue on|off|default|status [global]` controls whether `/build` moves
+  on to the next task by itself.
 
 Plus two subagents (`code-reviewer` and `test-runner`) and a hook in
 `settings.json` that shows Claude your latest progress every time a session starts.
@@ -61,16 +64,38 @@ If the suggestions get in the way, turn them off:
 A project setting always beats the global one. The global default lives in
 `~/.claude/framework-settings.md`. `/make-skill` keeps working either way.
 
+## Auto-continue
+
+With auto-continue on (the global default), `/build` doesn't stop after one task.
+It only stops to ask you when it really needs you: a product question the docs
+don't answer, going against a logged decision, something only you can provide
+(keys, sample files), a check it can't get passing, or a skill suggestion. It no
+longer waits for you to approve plans; it writes the plan's main choices into
+`progress.md` instead, and logs any architectural choice in `decisions.md`.
+
+Claude can't type `/clear` for you, so each next task runs in a fresh subagent,
+which starts with empty context just like `/clear`. You see a two or three line
+summary per task and can interrupt at any time. The chain stops when the current
+milestone is done, so you can look things over before the next one.
+
+- `/auto-continue off` goes back to one task per `/build` for this project, with
+  plan approval for bigger tasks.
+- `/auto-continue off global` makes that the default everywhere.
+- `/auto-continue default` and `/auto-continue status` work like the skill
+  suggestion ones.
+
 ## Using it
 
 1. Make an empty folder, open it in VS Code and start Claude Code.
 2. Type `/plan-idea` and paste your idea. Answer the questions, or just say "defaults".
-3. Type `/build`. Look over what it did, then type `/clear` and run `/build` again.
-   Keep going until the first milestone is done.
+3. Type `/build`. With auto-continue on it works through the first milestone,
+   stopping only when it needs you. With it off, look over what it did, then type
+   `/clear` and run `/build` again until the first milestone is done.
 4. When you think of something new, use `/add-feature`, then go back to `/build`.
 5. When a big chunk of work is finished, run `/ship`.
 
-Claude won't run these commands on its own. You type them when you want them.
+Claude won't run these commands on its own. You type them when you want them;
+the one exception is auto-continue chaining `/build` tasks within a milestone.
 You can still chat normally in between, and the project rules make sure any
 changes you ask for get written into the notes.
 
@@ -111,7 +136,7 @@ These steps are for a Mac. Swap in your own GitHub username wherever you see `US
 6. Restart VS Code, open a project, start Claude Code and run `/model fable`
    (or `/model opus`) once.
 7. Type `/`. If you see `plan-idea`, `build`, `add-feature`, `ship`,
-   `project-init`, `make-skill` and `skill-suggestions`, you're set.
+   `project-init`, `make-skill`, `skill-suggestions` and `auto-continue`, you're set.
 
 ## Keeping more than one computer in sync
 

@@ -36,3 +36,4 @@ place rather than appending notes at the bottom.
 
 ## Framework settings
 - Skill suggestions: default
+- Auto-continue: default
